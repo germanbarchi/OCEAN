@@ -1,0 +1,6 @@
+run data/create_data.sh
+
+edit experiments/config.sh
+
+run experiments/go.sh 
+

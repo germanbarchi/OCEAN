@@ -1,0 +1,35 @@
+ETAPAS 
+
+1 - Filtrar dataset. 
+    * No tienen transcripciones
+    * Música
+    * Baja densidad de palabras
+    * Tags de youtube no deseadas 
+
+2- Extraer del audio: 
+    * Segmentos con solo speech
+    * Segmentos con IPU determinado 
+
+3- Entrenar Random forest  
+    * Default 
+    * Custom features
+
+TAREAS
+
+Entrenar random forest con:
+
+* (Ok) Todos los audios del dataset: "all_audio"
+* (Ok) Todos los audios del dataset con solo speech. Son palabras concatenadas utilizando un forced aligner: 
+    * audio_type: "no_unvoiced"
+    * audio_list: "unvoiced_segments_complete_set.txt" 
+* (Ok) Audios que no contienen música: "all_audio_no_music_threshold_0.2"
+    * audios_list: "all_audio_complete_set.txt"
+* (Proceso) Audios que no contienen música y solo tienen speech
+    * audio_list: "all_audio_no_music_threshold_0.2.txt"
+* (Pendiente) Audios que no contienen música y tienen una alta densidad de palabras. Se resta la duración de los audios con solo speech a la duración final.
+* (Opcional) PLUS: audios que no tienen musica, tienen alta densidad de palabras y que no tienen un tag de youtube de los de la black list. ej: ASMR, whisper, music, etc.
+
+Tareas para la semana: 
+
+* Script que calcule la densidad de palabras y genere lista 
+* Script que extraiga las tags de youtube

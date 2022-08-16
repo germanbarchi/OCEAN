@@ -1,0 +1,6 @@
+,Dataset size,Train size,Test size,Val size
+Speech rate: 50%,9171,5472,1843,1856
+Speech rate: 60%,8526,5102,1700,1724
+Speech rate: 70%,6833,4112,1338,1383
+Speech rate: 80%,3590,2155,704,731
+Speech rate: 90%,565,359,107,99

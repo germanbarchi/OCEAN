@@ -1,0 +1,21 @@
+Audio preprocessing: 
+
+* la idea es que go apunte al directorio del experimento y lo busque en local_scripts. Ej: local_scripts/no_unvoiced.sh
+* no_unvoiced.sh llama a los scripts locales para procesar el audio. (remover silencios, cortar audios, etc)
+
+Extract features:
+
+* se busca en code/scripts/features. ejemplo: egemaps.py
+
+Create dataframe: 
+
+* EXPERIMENT_PATH/utils. Si hace algo muy particular con el dataframe, está en la carpeta local del experimento, si no, está en code/utils
+
+Train model: code/scripts/models
+
+
+
+
+
+
+
