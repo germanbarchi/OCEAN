@@ -38,7 +38,7 @@ def split_train_test(df,merge_train_val,labels):
     
     return X_test,Y_test,X_train,Y_train,X_val,Y_val
 
-def RandomForest(df,labels,merge_val_train):  
+def Linear_Regression(df,labels,merge_val_train):  
     
     X_test, Y_test, X_train, Y_train, X_val,Y_val =split_train_test(df,merge_val_train,labels)
     
@@ -89,53 +89,29 @@ if __name__=='__main__':
     warnings.filterwarnings('ignore')
     labels='None'
     print('Predicción Random Forest con labels OCEAN')
-    preds_all,r2_all,MAE_all,MSE_all,RMSE_all,y_test,RF_reg=RandomForest(df, labels,merge_val_train)
+    preds_all,r2_all,MAE_all,MSE_all,RMSE_all,y_test,RF_reg=Linear_Regression(df, labels,merge_val_train)
     
     print('Predicción Random Forest con label OPENNESS')
     labels='openness' 
-    preds_O,r2_O,MAE_O,MSE_O,RMSE_O,y_test_O,RF_reg_O=RandomForest(df, labels, merge_val_train)
+    preds_O,r2_O,MAE_O,MSE_O,RMSE_O,y_test_O,RF_reg_O=Linear_Regression(df, labels, merge_val_train)
     
     print('Predicción Random Forest con label CONSCIENCIOUSNESS')
     labels='conscientiousness' 
-    preds_C,r2_C,MAE_C,MSE_C,RMSE_C,y_test_C,RF_reg_C=RandomForest(df, labels, merge_val_train)    
+    preds_C,r2_C,MAE_C,MSE_C,RMSE_C,y_test_C,RF_reg_C=Linear_Regression(df, labels, merge_val_train)    
     
     print('Predicción Random Forest con label EXTRAVERSION')
     labels='extraversion' 
-    preds_E,r2_E,MAE_E,MSE_E,RMSE_E,y_test_E,RF_reg_E=RandomForest(df, labels, merge_val_train)
+    preds_E,r2_E,MAE_E,MSE_E,RMSE_E,y_test_E,RF_reg_E=Linear_Regression(df, labels, merge_val_train)
     
     print('Predicción Random Forest con label AGREEABLENESS')
     labels='agreeableness' 
-    preds_A,r2_A,MAE_A,MSE_A,RMSE_A,y_test_A,RF_reg_A=RandomForest(df, labels, merge_val_train)
+    preds_A,r2_A,MAE_A,MSE_A,RMSE_A,y_test_A,RF_reg_A=Linear_Regression(df, labels, merge_val_train)
     
     print('Predicción Random Forest con label NEUROTICISM')
     labels='neuroticism' 
-    preds_N,r2_N,MAE_N,MSE_N,RMSE_N,y_test_N,RF_reg_N=RandomForest(df, labels, merge_val_train)
+    preds_N,r2_N,MAE_N,MSE_N,RMSE_N,y_test_N,RF_reg_N=Linear_Regression(df, labels, merge_val_train)
 
     print('Guardando datos en %s' % results_path)
     
     var=vars()
     resumen(results_path,var)
-
-    importance_O=RF_reg_O.feature_importances_
-    importance_C=RF_reg_C.feature_importances_
-    importance_E=RF_reg_E.feature_importances_
-    importance_A=RF_reg_A.feature_importances_
-    importance_N=RF_reg_N.feature_importances_   
-
-       
-    # Importance
-
-    features_list=list(df.loc[:,~df.columns.isin(['Partition','audio_tag','extraversion','conscientiousness','openness','agreeableness','neuroticism'])].columns[1:])
-    
-    importance_DF=pd.DataFrame({'O':importance_O,'C':importance_C,'E':importance_E,'A':importance_A,'N':importance_N})
-    importance_DF['features']=features_list
-
-    importance_DF.to_csv(results_path+'/importance.csv')
-
-    # Busqueda de los features más importantes
-    
-    importance_DF=pd.melt(importance_DF,id_vars=['features'],value_vars=['O','C','E','A','N']).rename(columns={'variable':'Personality','value':'Importance'})
-    percentil_95=np.percentile(importance_DF.Importance.values,95)
-    relevant_features_DF=importance_DF[importance_DF['Importance']>percentil_95]
-
-    relevant_features_DF.to_csv(results_path+'/relevant_features.csv')

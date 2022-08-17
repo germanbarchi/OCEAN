@@ -16,7 +16,7 @@ BASE_AUDIO_PATH=data/audio
 FEATURES='egemaps'
 
 #MODEL='random_forest'
-MODEL='lineal_regression'
+MODEL='linear_regression'
 
 PARAMS='default'
 
@@ -36,7 +36,7 @@ PARAMS='default'
 #AUDIO_TYPE='silero_avg_IPU_0.5'
 
 #AUDIO_TYPE='aleatorio'
-#AUDIO_TYPE='aleatorio_mix_val'
+AUDIO_TYPE='aleatorio_mix_val'
 
 LOCAL_DATA_PATH=data
 EXPERIMENT_PATH=experiments/$FEATURES/$MODEL/$PARAMS/$AUDIO_TYPE
@@ -56,7 +56,7 @@ FE_AUDIO_PATH=data/silero/$AUDIO_TYPE
 # Features Auto-check or feature extraction.
 
 EXTRACT_FEATURES=0 
-LOAD_FEATURES=experiments/feature_data/${FEATURES}_$AUDIO_TYPE.csv
+LOAD_FEATURES=experiments/feature_data/${FEATURES}_all_audio.csv
 
 # AUDIO SUBLIST
 # Define audio file subset list
