@@ -37,6 +37,9 @@ experiments/egemaps/random_forest/default/silero_no_speech/results/
 experiments/egemaps/random_forest/default/silero_speech/local_data/
 experiments/egemaps/random_forest/default/silero_speech/results/
 
+experiments/egemaps/linear_regression/default/aleatorio/local_data/
+experiments/egemaps/linear_regression/default/aleatorio/results/
+
 experiments/feature_data/
 
 EXTERNAL_DATA/

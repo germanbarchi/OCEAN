@@ -14,7 +14,10 @@
 BASE_AUDIO_PATH=data/audio
 
 FEATURES='egemaps'
-MODEL='random_forest'
+
+#MODEL='random_forest'
+MODEL='lineal_regression'
+
 PARAMS='default'
 
 #AUDIO_TYPE='all_audio'
@@ -26,7 +29,7 @@ PARAMS='default'
 #AUDIO_TYPE='gentle_non_speech'
 
 #AUDIO_TYPE='silero_speech'
-AUDIO_TYPE='silero_no_speech'
+#AUDIO_TYPE='silero_no_speech'
 #AUDIO_TYPE='silero_IPU_0.25'
 #AUDIO_TYPE='silero_IPU_0.5'
 #AUDIO_TYPE='silero_avg_IPU_0.25'
@@ -58,7 +61,7 @@ LOAD_FEATURES=experiments/feature_data/${FEATURES}_$AUDIO_TYPE.csv
 # AUDIO SUBLIST
 # Define audio file subset list
 
-#LIST=all_audio_complete_set
+LIST=all_audio_complete_set
 
 #LIST=all_audio_music_0.2
 
@@ -78,7 +81,7 @@ LOAD_FEATURES=experiments/feature_data/${FEATURES}_$AUDIO_TYPE.csv
 #LIST=yamnet_no_music_20+speech_rate_0.6
 #LIST=yamnet_no_music_20+speech_rate_0.7
 #LIST=yamnet_no_music_20+speech_rate_0.8
-LIST=yamnet_no_music_20+speech_rate_0.9
+#LIST=yamnet_no_music_20+speech_rate_0.9
 
 
 AUDIO_LIST=experiments/audio_lists/$LIST.txt
