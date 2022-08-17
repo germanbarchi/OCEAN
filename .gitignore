@@ -40,6 +40,9 @@ experiments/egemaps/random_forest/default/silero_speech/results/
 experiments/egemaps/linear_regression/default/aleatorio/local_data/
 experiments/egemaps/linear_regression/default/aleatorio/results/
 
+experiments/egemaps/linear_regression/default/aleatorio_mix_val/local_data/
+experiments/egemaps/linear_regression/default/aleatorio_mix_val/results/
+
 experiments/feature_data/
 
 EXTERNAL_DATA/
