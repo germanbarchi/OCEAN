@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-
+from sklearn.utils import resample
 from sklearn.ensemble import RandomForestRegressor
 
 from sklearn.metrics import r2_score
@@ -11,7 +11,18 @@ import warnings
 import os
 import sys
 
+def subset(df,subset_train,subset_val):
+    
+    # Sample Train and Val subsets according to user input in config file
 
+    print('resampling')
+    df_val=resample(df[df['Partition']=='Val'],n_samples=subset_val,replace=False)
+    df_train=resample(df[df['Partition']=='Train'],n_samples=subset_train,replace=False)
+    
+    df_=pd.concat([df_train,df_val])
+    
+    return df_
+    
 def split_train_test(df,merge_train_val,labels):
     
     df=df.drop(columns='audio_tag')
@@ -38,14 +49,14 @@ def split_train_test(df,merge_train_val,labels):
     
     return X_test,Y_test,X_train,Y_train,X_val,Y_val
 
-def RandomForest(df,labels,merge_val_train):  
+def RandomForest(df,labels,merge_val_train,subset_train,subset_val):  
     
     X_test, Y_test, X_train, Y_train, X_val,Y_val =split_train_test(df,merge_val_train,labels)
     
     RF_reg=RandomForestRegressor(random_state=42) 
     
     RF_reg.fit(X_train,Y_train)
-      
+    
     predictions=RF_reg.predict(X_val.values)
       
     r2=r2_score(Y_val, predictions)    
@@ -78,6 +89,8 @@ if __name__=='__main__':
     merge_val_train=sys.argv[2] #False: no mergeo train y val 
     save_path=sys.argv[3]
     experiment_name=sys.argv[4]
+    subset_train=int(sys.argv[5])
+    subset_val=int(sys.argv[6])
 
     results_path=save_path+'/data/'+experiment_name
 
@@ -86,30 +99,37 @@ if __name__=='__main__':
 
     df=pd.read_csv(df_path)   
     df=df.fillna(0)
+
+        # Sample Train and Val subsets according to user input in config file
+    
+    if (subset_train!=0) and (subset_val!=0):
+
+        df=subset(df,subset_train,subset_val)
+    
     warnings.filterwarnings('ignore')
     labels='None'
     print('Predicción Random Forest con labels OCEAN')
-    preds_all,r2_all,MAE_all,MSE_all,RMSE_all,y_test,RF_reg=RandomForest(df, labels,merge_val_train)
+    preds_all,r2_all,MAE_all,MSE_all,RMSE_all,y_test,RF_reg=RandomForest(df, labels,merge_val_train,subset_train,subset_val)
     
     print('Predicción Random Forest con label OPENNESS')
     labels='openness' 
-    preds_O,r2_O,MAE_O,MSE_O,RMSE_O,y_test_O,RF_reg_O=RandomForest(df, labels, merge_val_train)
+    preds_O,r2_O,MAE_O,MSE_O,RMSE_O,y_test_O,RF_reg_O=RandomForest(df, labels, merge_val_train,subset_train,subset_val)
     
     print('Predicción Random Forest con label CONSCIENCIOUSNESS')
     labels='conscientiousness' 
-    preds_C,r2_C,MAE_C,MSE_C,RMSE_C,y_test_C,RF_reg_C=RandomForest(df, labels, merge_val_train)    
+    preds_C,r2_C,MAE_C,MSE_C,RMSE_C,y_test_C,RF_reg_C=RandomForest(df, labels, merge_val_train,subset_train,subset_val)    
     
     print('Predicción Random Forest con label EXTRAVERSION')
     labels='extraversion' 
-    preds_E,r2_E,MAE_E,MSE_E,RMSE_E,y_test_E,RF_reg_E=RandomForest(df, labels, merge_val_train)
+    preds_E,r2_E,MAE_E,MSE_E,RMSE_E,y_test_E,RF_reg_E=RandomForest(df, labels, merge_val_train,subset_train,subset_val)
     
     print('Predicción Random Forest con label AGREEABLENESS')
     labels='agreeableness' 
-    preds_A,r2_A,MAE_A,MSE_A,RMSE_A,y_test_A,RF_reg_A=RandomForest(df, labels, merge_val_train)
+    preds_A,r2_A,MAE_A,MSE_A,RMSE_A,y_test_A,RF_reg_A=RandomForest(df, labels, merge_val_train,subset_train,subset_val)
     
     print('Predicción Random Forest con label NEUROTICISM')
     labels='neuroticism' 
-    preds_N,r2_N,MAE_N,MSE_N,RMSE_N,y_test_N,RF_reg_N=RandomForest(df, labels, merge_val_train)
+    preds_N,r2_N,MAE_N,MSE_N,RMSE_N,y_test_N,RF_reg_N=RandomForest(df, labels, merge_val_train,subset_train,subset_val)
 
     print('Guardando datos en %s' % results_path)
     

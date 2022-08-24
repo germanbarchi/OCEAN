@@ -15,8 +15,8 @@ BASE_AUDIO_PATH=data/audio
 
 FEATURES='egemaps'
 
-#MODEL='random_forest'
-MODEL='linear_regression'
+MODEL='random_forest'
+#MODEL='linear_regression'
 
 PARAMS='default'
 
@@ -33,10 +33,10 @@ PARAMS='default'
 #AUDIO_TYPE='silero_IPU_0.25'
 #AUDIO_TYPE='silero_IPU_0.5'
 #AUDIO_TYPE='silero_avg_IPU_0.25'
-#AUDIO_TYPE='silero_avg_IPU_0.5'
+AUDIO_TYPE='silero_avg_IPU_0.5'
 
 #AUDIO_TYPE='aleatorio'
-AUDIO_TYPE='aleatorio_mix_val'
+#AUDIO_TYPE='aleatorio_mix_val'
 
 LOCAL_DATA_PATH=data
 EXPERIMENT_PATH=experiments/$FEATURES/$MODEL/$PARAMS/$AUDIO_TYPE
@@ -56,12 +56,13 @@ FE_AUDIO_PATH=data/silero/$AUDIO_TYPE
 # Features Auto-check or feature extraction.
 
 EXTRACT_FEATURES=0 
-LOAD_FEATURES=experiments/feature_data/${FEATURES}_all_audio.csv
+#LOAD_FEATURES=experiments/feature_data/${FEATURES}_$AUDIO_TYPE.csv
+LOAD_FEATURES=experiments/feature_data/${FEATURES}_silero_IPU_0.5.csv
 
 # AUDIO SUBLIST
 # Define audio file subset list
 
-LIST=all_audio_complete_set
+#LIST=all_audio_complete_set
 
 #LIST=all_audio_music_0.2
 
@@ -81,10 +82,15 @@ LIST=all_audio_complete_set
 #LIST=yamnet_no_music_20+speech_rate_0.6
 #LIST=yamnet_no_music_20+speech_rate_0.7
 #LIST=yamnet_no_music_20+speech_rate_0.8
-#LIST=yamnet_no_music_20+speech_rate_0.9
+LIST=yamnet_no_music_20+speech_rate_0.9
 
 
 AUDIO_LIST=experiments/audio_lists/$LIST.txt
 
-EXPERIMENT_NAME=${AUDIO_TYPE}-$LIST
+# Define train and val subset value or set subset value to 0 to use the entire partition 
+
+SUBSET_TRAIN=1000
+SUBSET_VAL=200
+
+EXPERIMENT_NAME=${AUDIO_TYPE}-$LIST-subset_t${SUBSET_TRAIN}_v$SUBSET_VAL
 

@@ -162,7 +162,7 @@ echo "$(date): Loading model from: $MODEL" | tee -a $REPORT_FILE
 
 MERGE_TRAIN_VAL='False'
 
-python3 $MODEL.py $DF_PATH $MERGE_TRAIN_VAL $SAVE_PATH $EXPERIMENT_NAME
+python3 $MODEL.py $DF_PATH $MERGE_TRAIN_VAL $SAVE_PATH $EXPERIMENT_NAME $SUBSET_TRAIN $SUBSET_VAL
 
 echo "$(date): Training and results: OK" | tee -a $REPORT_FILE
 
