@@ -4,7 +4,7 @@ from sklearn.utils import resample
 from sklearn.metrics import r2_score
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import mean_absolute_error
-
+from sklearn.utils import resample
 import numpy as np
 import tqdm
 import warnings
@@ -57,10 +57,10 @@ def resumen(var):
 
 if __name__=='__main__':
     
-    df=pd.read_csv('experiments/egemaps/random_forest/default/all_audio/local_data/egemaps_all_audio_complete_set.csv',index_col=0)
+    df=pd.read_csv('egemaps_all_audio_complete_set.csv',index_col=0)
     
     # subsample dataframe. Return only train and val partitions
-    df_train_val=df[(df['Partition']=='Test') and (df['Partition']=='Val')]
+    df_train_val=df[df['Partition'].isin(['Test','Val'])]
     
     train_len=df[df['Partition']=='Train'].shape[0]
 
@@ -75,7 +75,7 @@ if __name__=='__main__':
         
         # resample train partition. 
         
-        train = resample(df_train_val, replace=True, n_samples=train_len)
+        train = resample(df_train_val, replace=True, n_samples=train_len,random_state=42+i)
         test = df_train_val[~df_train_val.index.isin(train.index)]
 
         preds_all,r2_all,MAE_all,MSE_all,RMSE_all,y_test,RF_reg=RandomForest(train,test)
@@ -85,4 +85,4 @@ if __name__=='__main__':
     metrics_list=np.transpose(metrics_list)
     df=pd.DataFrame({'r2':metrics_list[0],'r':metrics_list[1],'MAE':metrics_list[2],'MSE':metrics_list[3],'RMSE':metrics_list[4]})
 
-    df.to_csv('bootstraping.csv')
+    df.to_csv('bootstraping_shuffle_train_val.csv')
