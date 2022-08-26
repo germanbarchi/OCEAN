@@ -57,7 +57,7 @@ if __name__=='__main__':
     df=pd.read_csv('egemaps_all_audio_complete_set.csv',index_col=0)
     
     # subsample dataframe. Return only train and val partitions
-    df_train_val=df[df['Partition'].isin(['Test','Val'])]
+    df_train_val=df[df['Partition'].isin(['Train','Val'])]
     
     train_len=df[df['Partition']=='Train'].shape[0]
 
@@ -72,7 +72,7 @@ if __name__=='__main__':
         
         # resample train partition. 
         
-        train = resample(df_train_val, replace=True, n_samples=train_len,random_state=42+i)
+        train = resample(df_train_val, replace=False, n_samples=train_len,random_state=42+i)
         test = df_train_val[~df_train_val.index.isin(train.index)]
 
         preds_all,r2_all,MAE_all,MSE_all,RMSE_all,y_test,RF_reg=RandomForest(train,test)
@@ -82,4 +82,4 @@ if __name__=='__main__':
     metrics_list=np.transpose(metrics_list)
     df=pd.DataFrame({'r2':metrics_list[0],'r':metrics_list[1],'MAE':metrics_list[2],'MSE':metrics_list[3],'RMSE':metrics_list[4]})
 
-    df.to_csv('bootstraping_suffle_train.csv')
+    df.to_csv('bootstraping_suffle_train_no_replacement.csv')

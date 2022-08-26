@@ -22,9 +22,6 @@ def RandomForest(train,val):
     X_train, Y_train =split_train_test(train)
     X_val, Y_val= split_train_test(val)
     
-    #Shufle val labels
-    Y_val=Y_val.sample(frac=1)
-
     RF_reg=RandomForestRegressor(random_state=42) 
     
     RF_reg.fit(X_train,Y_train)
@@ -55,10 +52,10 @@ def resumen(var):
 if __name__=='__main__':
     
     df=pd.read_csv('egemaps_all_audio_complete_set.csv',index_col=0)
-    
+    print(df.shape)
     # subsample dataframe. Return only train and val partitions
     df_train_val=df[df['Partition'].isin(['Train','Val'])]
-    
+    print(df_train_val.shape)
     train_len=df[df['Partition']=='Train'].shape[0]
 
     n_samples=train_len
@@ -72,7 +69,7 @@ if __name__=='__main__':
         
         # resample train partition. 
         
-        train = resample(df_train_val, replace=False, n_samples=train_len,random_state=42+i)
+        train = resample(df_train_val, replace=False, n_samples=train_len)
         test = df_train_val[~df_train_val.index.isin(train.index)]
 
         preds_all,r2_all,MAE_all,MSE_all,RMSE_all,y_test,RF_reg=RandomForest(train,test)
@@ -82,4 +79,4 @@ if __name__=='__main__':
     metrics_list=np.transpose(metrics_list)
     df=pd.DataFrame({'r2':metrics_list[0],'r':metrics_list[1],'MAE':metrics_list[2],'MSE':metrics_list[3],'RMSE':metrics_list[4]})
 
-    df.to_csv('bootstraping_shuffle_val_no_replacement.csv')
+    df.to_csv('bootstraping_no_shuffle_no_replacement.csv')
