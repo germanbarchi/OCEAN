@@ -7,7 +7,7 @@ def concat_df(df_ipu_50,labels_df):
     # Concat features and label dataframes
   
     df_ipu_50['Name']=df_ipu_50['Name'].apply(lambda x:x.replace('.wav',''))
-    labels_df['audio_tag']=labels_df['audio_tag'].apply(lambda x: x.replace('.mp4',''))
+    labels_df['audio_tag']=labels_df['audio_tag'].apply(lambda x: x.replace('.wav',''))
 
     for i in range(df_ipu_50.shape[0]):
         split_=df_ipu_50.loc[i,'Name'].split('_')

@@ -12,6 +12,7 @@
 # * IPU_0.5
 
 BASE_AUDIO_PATH=data/audio
+LABELS_PATH=data/labels/new_partitions-labels.csv 
 
 FEATURES='egemaps'
 
@@ -56,8 +57,10 @@ FE_AUDIO_PATH=data/silero/$AUDIO_TYPE
 # Features Auto-check or feature extraction.
 
 EXTRACT_FEATURES=0 
-#LOAD_FEATURES=experiments/feature_data/${FEATURES}_$AUDIO_TYPE.csv
-LOAD_FEATURES=experiments/feature_data/${FEATURES}_silero_IPU_0.5.csv
+#LOAD_FEATURES=experiments/feature_data/${FEATURES}_${AUDIO_TYPE}.csv
+#LOAD_FEATURES=experiments/feature_data/new_partitions-${FEATURES}_${AUDIO_TYPE}.csv
+#LOAD_FEATURES=experiments/feature_data/new_partitions-${FEATURES}_silero_IPU_0.5.csv
+#LOAD_FEATURES=experiments/feature_data/${FEATURES}_silero_IPU_0.5.csv
 
 # AUDIO SUBLIST
 # Define audio file subset list
@@ -82,15 +85,16 @@ LOAD_FEATURES=experiments/feature_data/${FEATURES}_silero_IPU_0.5.csv
 #LIST=yamnet_no_music_20+speech_rate_0.6
 #LIST=yamnet_no_music_20+speech_rate_0.7
 #LIST=yamnet_no_music_20+speech_rate_0.8
-LIST=yamnet_no_music_20+speech_rate_0.9
+#LIST=yamnet_no_music_20+speech_rate_0.9
 
 
 AUDIO_LIST=experiments/audio_lists/$LIST.txt
 
 # Define train and val subset value or set subset value to 0 to use the entire partition 
 
-SUBSET_TRAIN=1000
-SUBSET_VAL=200
+SUBSET_TRAIN=0
+SUBSET_VAL=0
 
-EXPERIMENT_NAME=${AUDIO_TYPE}-$LIST-subset_t${SUBSET_TRAIN}_v$SUBSET_VAL
+#EXPERIMENT_NAME=${AUDIO_TYPE}-$LIST-subset_t${SUBSET_TRAIN}_v$SUBSET_VAL
 
+EXPERIMENT_NAME=new_partition_${AUDIO_TYPE}-$LIST
